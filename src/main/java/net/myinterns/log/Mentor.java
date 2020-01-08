@@ -20,32 +20,26 @@ import com.sun.jersey.api.client.WebResource;
 
 import net.andree.MyInterns.common.dto.UserDTO;
 
-/**
- * Servlet implementation class Login
- */
-public class Login extends HttpServlet {
+public class Mentor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	public Mentor() {
+		super();
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		HttpSession session = request.getSession();
 		
+		HttpSession session = request.getSession();
 		Client c = Client.create();
-
-		WebResource webResource = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/login");
-
-		String input = "{\"username\":" + username + ",\"password\":" + password + "}";
-
-		ClientResponse res = webResource.type("application/json").post(ClientResponse.class, input);
-		JSONObject output = res.getEntity(JSONObject.class);
-
-		session.setAttribute("username", username);
-
-		response.sendRedirect("mentor.jsp");
-				
+		
 		WebResource webResourceUsersTypeS = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/users");
 		ClientResponse responseUsersTypeS = webResourceUsersTypeS.type("application/json").get(ClientResponse.class);
 		JSONArray resultUserTypeS = responseUsersTypeS.getEntity(JSONArray.class);
