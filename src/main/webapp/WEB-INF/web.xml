@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-	<display-name>Bristleback Web Application</display-name>
+	<display-name>Interns</display-name>
 
 	<servlet>
 		<servlet-name>springServlet</servlet-name>
@@ -25,6 +25,13 @@
 		<servlet-name>signUp</servlet-name>
 		<servlet-class>net.myinterns.log.SignUp</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>logout</display-name>
+		<servlet-name>logout</servlet-name>
+		<servlet-class>net.myinterns.log.Logout</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>login</servlet-name>
@@ -33,6 +40,10 @@
 	<servlet-mapping>
 		<servlet-name>signUp</servlet-name>
 		<url-pattern>/signUp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>logout</servlet-name>
+		<url-pattern>/mentor</url-pattern>
 	</servlet-mapping>
 
 </web-app>
