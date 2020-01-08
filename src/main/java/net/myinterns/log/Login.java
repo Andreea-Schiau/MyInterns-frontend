@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
@@ -20,13 +19,14 @@ import com.sun.jersey.api.client.WebResource;
  */
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
+		HttpSession session = request.getSession();
+		
 		Client c = Client.create();
 
 		WebResource webResource = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/login");
@@ -34,6 +34,10 @@ public class Login extends HttpServlet {
 		String input = "{\"username\":" + username + ",\"password\":" + password + "}";
 
 		ClientResponse res = webResource.type("application/json").post(ClientResponse.class, input);
-		JSONObject output = res.getEntity(JSONObject.class);		
+		JSONObject output = res.getEntity(JSONObject.class);
+
+		session.setAttribute("username", username);
+
+		response.sendRedirect("mentor.jsp");
 	}
 }
