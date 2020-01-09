@@ -22,11 +22,12 @@ public class SignUp extends HttpServlet {
 
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		Boolean isMentor = false;
 		
 		Client c = Client.create();
 		
 		WebResource webResource = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/add");
-		String input = "{\"username\":" + username + ",\"password\":" + password + "}";
+		String input = "{\"username\":" + username + ",\"password\":" + password + ",\"isMentor\":" + isMentor + "}";
 		
 		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
 		

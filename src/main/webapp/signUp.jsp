@@ -9,7 +9,7 @@
 <body>
 	<form method="post" action="signUp">
 		<input type="text" placeholder="Username" required name="username">
-		<input type="password" placeholder="Password" required name="password">
+		<input type="password" placeholder="Password" required name="password">	
 		<input type="submit" value="Signup">
 	</form>
 </body>
