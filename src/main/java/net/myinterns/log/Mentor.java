@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.eclipse.jetty.server.Authentication.User;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -30,24 +31,43 @@ public class Mentor extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		String username = request.getParameter("deleteUser");
+
+		try {
+			Client client = Client.create();
+			WebResource webResource = client
+					.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/delete/user/" + username);
+			ClientResponse res = webResource.get(ClientResponse.class);
+
+			if (res.getStatus() != 204) {
+				System.out.println(res.getStatus());
+				System.out.println("The user is still there!");
+			} else {
+				System.out.println("The user was deleted!");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		response.sendRedirect("mentor.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		Client c = Client.create();
-		
+
 		WebResource webResourceUsersTypeS = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/users");
 		ClientResponse responseUsersTypeS = webResourceUsersTypeS.type("application/json").get(ClientResponse.class);
 		JSONArray resultUserTypeS = responseUsersTypeS.getEntity(JSONArray.class);
-		
+
 		int s = 0;
 		JSONObject objS = new JSONObject();
 		List<UserDTO> users = new ArrayList<UserDTO>();
-		
+
 		while (s < resultUserTypeS.length()) {
 			try {
 				objS = resultUserTypeS.getJSONObject(s);
@@ -60,7 +80,7 @@ public class Mentor extends HttpServlet {
 			}
 			s++;
 		}
-		
+
 		session.setAttribute("users", users);
 	}
 }

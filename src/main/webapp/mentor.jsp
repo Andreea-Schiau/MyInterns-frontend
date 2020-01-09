@@ -24,25 +24,29 @@
 	</form>
 	<br>
 
-	<p>Users: </p>
-	<table>
-		<tr>
-			<th>Users</th>
-			<th>Username</th>
-		</tr>
-		<%
-			int var1 = 0;
-			for (UserDTO user : users) {
-		%>
-		<tr>
-			<td><%=++var1%></td>
-			<td><%=user.getUsername()%></td>
-		</tr>
+	<p>Users:</p>
+	<form method="get" action="DeleteUser">
+		<table>
+			<tr>
+				<th>User</th>
+				<th>Username</th>
+				<th></th>
 
-		<%
-			}
-		%>
-	</table>
-
+			</tr>
+			<%
+				int var1 = 0;
+				for (UserDTO user : users) {
+			%>
+			<tr>
+				<td><%=++var1%></td>
+				<td><input type=text name="deleteUser"
+					value=<%=user.getUsername()%> readonly></td>
+				<td><input type=submit value = delete></td>
+			</tr>
+			<%
+				}
+			%>
+		</table>
+	</form>
 </body>
 </html>
