@@ -7,7 +7,7 @@
 	<artifactId>MyInterns-frontend</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Interns</name>
+	<name>MyInterns</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -92,7 +92,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>Interns</finalName>
+		<finalName>MyInterns</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>

@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
-		
+
 		Client c = Client.create();
 
 		WebResource webResource = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/login");
@@ -44,16 +44,22 @@ public class Login extends HttpServlet {
 
 		session.setAttribute("username", username);
 
-		response.sendRedirect("mentor.jsp");
-				
+		if (checkUser(c, username)) {
+
+			response.sendRedirect("mentor.jsp");
+
+		} else {
+			response.sendRedirect("student.jsp");
+		}
+
 		WebResource webResourceUsersTypeS = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/users");
 		ClientResponse responseUsersTypeS = webResourceUsersTypeS.type("application/json").get(ClientResponse.class);
 		JSONArray resultUserTypeS = responseUsersTypeS.getEntity(JSONArray.class);
-		
+
 		int s = 0;
 		JSONObject objS = new JSONObject();
 		List<UserDTO> users = new ArrayList<UserDTO>();
-		
+
 		while (s < resultUserTypeS.length()) {
 			try {
 				objS = resultUserTypeS.getJSONObject(s);
@@ -66,7 +72,25 @@ public class Login extends HttpServlet {
 			}
 			s++;
 		}
-		
+
 		session.setAttribute("users", users);
+	}
+
+	protected boolean checkUser(Client c, String username) {
+
+		WebResource webUserType = c
+				.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/getByUsername/" + username);
+		ClientResponse responseUserType = webUserType.type("application/json").get(ClientResponse.class);
+		JSONObject outputUserType = responseUserType.getEntity(JSONObject.class);
+		boolean isRealyMentor = false;
+		try {
+			isRealyMentor = outputUserType.getBoolean("isMentor");
+			if (isRealyMentor)
+				return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		return false;
 	}
 }
