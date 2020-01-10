@@ -20,9 +20,6 @@ import com.sun.jersey.api.client.WebResource;
 
 import net.andree.MyInterns.common.dto.UserDTO;
 
-/**
- * Servlet implementation class Login
- */
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +56,7 @@ public class Login extends HttpServlet {
 		int s = 0;
 		JSONObject objS = new JSONObject();
 		List<UserDTO> users = new ArrayList<UserDTO>();
-
+	
 		while (s < resultUserTypeS.length()) {
 			try {
 				objS = resultUserTypeS.getJSONObject(s);
