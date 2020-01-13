@@ -7,7 +7,7 @@
 <title>SignUp</title>
 </head>
 <body>
-	<div>try another username!</div>
+	<div>Username already exist. Try another!</div>
 	<form method="post" action="signUp">
 		<form method="post" action="signUp">
 			<input type="text" placeholder="Username" required name="username">

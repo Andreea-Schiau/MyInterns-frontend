@@ -37,7 +37,7 @@ public class Mentor extends HttpServlet {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client
-					.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/delete/user/" + username);
+					.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/delete/user/" + username);
 			ClientResponse res = webResource.get(ClientResponse.class);
 
 			if (res.getStatus() != 204) {
@@ -60,7 +60,7 @@ public class Mentor extends HttpServlet {
 		HttpSession session = request.getSession();
 		Client c = Client.create();
 
-		WebResource webResourceUsersTypeS = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/users");
+		WebResource webResourceUsersTypeS = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
 		ClientResponse responseUsersTypeS = webResourceUsersTypeS.type("application/json").get(ClientResponse.class);
 		JSONArray resultUserTypeS = responseUsersTypeS.getEntity(JSONArray.class);
 

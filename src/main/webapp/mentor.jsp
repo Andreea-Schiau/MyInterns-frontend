@@ -25,7 +25,7 @@
 	<br>
 
 	<p>Users:</p>
-	<form method="get" action="DeleteUser">
+	<form method="get" action="UpdateUser">
 		<table>
 			<tr>
 				<th>User</th>
@@ -41,7 +41,8 @@
 				<td><%=++var1%></td>
 				<td><input type=text name=deleteUser
 					value=<%=user.getUsername()%> readonly></td>
-				<td><input type=submit value = delete></td>
+				<td><input type=submit value=delete></td>
+				<td><input type=submit value=makeItMentor></td>
 			</tr>
 			<%
 				}
