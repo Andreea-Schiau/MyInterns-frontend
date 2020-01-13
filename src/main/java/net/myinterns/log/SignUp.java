@@ -40,7 +40,7 @@ public class SignUp extends HttpServlet {
 
 		} else {
 
-			webResource = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/add");
+			webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/add");
 			String input = "{\"username\":" + username + ",\"password\":" + password + ",\"isMentor\":" + isMentor
 					+ "}";
 
@@ -52,7 +52,7 @@ public class SignUp extends HttpServlet {
 
 	protected boolean alreadyUsername(Client c, String username) {
 
-		webResource = c.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/users");
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
 		ClientResponse responsUsers = webResource.type("application/json").get(ClientResponse.class);
 		JSONArray resultUsers = responsUsers.getEntity(JSONArray.class);
 		JSONObject objS = new JSONObject();

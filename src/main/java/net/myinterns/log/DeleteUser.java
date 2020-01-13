@@ -37,7 +37,7 @@ public class DeleteUser extends HttpServlet {
 		try {
 			Client client = Client.create();
 			WebResource webResource = client
-					.resource("http://localhost:8080/MyInterns8-0.0.1-SNAPSHOT/user/delete/user" + username);
+					.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/delete/user" + username);
 			ClientResponse res = webResource.get(ClientResponse.class);
 
 			if (res.getStatus() != 204) {
