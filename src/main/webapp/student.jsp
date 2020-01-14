@@ -13,11 +13,12 @@
 <body>
 	<%
 		String username = (String) session.getAttribute("username");
+		String password = (String) session.getAttribute("password");
 		List<UserDTO> users = (List<UserDTO>) session.getAttribute("users");
 	%>
 	<p>
-		Welcome
-		<%=username%></p>
+		Welcome <a href="update.jsp"><%=username%></a>
+	</p>
 
 	<form method="post" action="mentor">
 		<input type="submit" value="Logout">
