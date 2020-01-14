@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
 		res.getStatus();
 
 		session.setAttribute("username", username);
-
+		session.setAttribute("password", password);
 
 			if (output == null || output.isNull("username")) {
 				response.sendRedirect("wrongUser.jsp");
