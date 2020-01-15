@@ -15,7 +15,7 @@
 
 	<form action="update" method="post">
 		Username: <input type="text" name="updateUsername" value=<%=username%>
-			placeholder=<%=username%> readonly> 
+			placeholder=<%=username%>> 
 		Password: <input type="text" name="updatePassword" value=<%=password%>
 			placeholder=<%=username%>> 
 		<input type="submit" value="Update">
