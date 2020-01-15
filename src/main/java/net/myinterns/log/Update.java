@@ -32,6 +32,7 @@ public class Update extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String usernameIn = request.getParameter("username");
 		String username = request.getParameter("updateUsername");
 		String password = request.getParameter("updatePassword");
 
@@ -39,7 +40,7 @@ public class Update extends HttpServlet {
 
 		long id = 0;
 		try {
-			id = getUsernameId(c, username);
+			id = getUsernameId(c, usernameIn);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
