@@ -37,19 +37,17 @@ public class SignUp extends HttpServlet {
 
 		Client c = Client.create();
 
-		if (alreadyUsername(c, username)) {
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/addDTO");
+		String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
+				+ ",\"email\":" + email + ",\"username\":" + username + ",\"password\":" + password + "}";
+
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
+		if (alreadyUsername(c, username) || alreadyEmail(c, email) ) {
 
 			res.sendRedirect("tryAnother.jsp");
 
 		} else {
-			webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/addDTO");
-			String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
-					+ ",\"email\":" + email + ",\"username\":" + username + ",\"password\":" + password + "}";
-
-			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
-
 			res.sendRedirect("index.jsp");
-
 		}
 	}
 
@@ -68,6 +66,33 @@ public class SignUp extends HttpServlet {
 				usernameDB = objS.getString("username");
 
 				if (usernameDB.contentEquals(username)) {
+
+					return true;
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return false;
+	}
+	
+	protected boolean alreadyEmail(Client c, String email) {
+
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/students");
+		ClientResponse responseStudents = webResource.type("application/json").get(ClientResponse.class);
+		JSONArray resultStudents = responseStudents.getEntity(JSONArray.class);
+		JSONObject objS = new JSONObject();
+
+		String emailDB = "";
+
+		for (int i = 0; i < resultStudents.length(); i++) {
+			try {
+				objS = resultStudents.getJSONObject(i);
+				emailDB = objS.getString("email");
+
+				if (emailDB.contentEquals(email)) {
 
 					return true;
 				}
