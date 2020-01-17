@@ -28,9 +28,12 @@ public class SignUp extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+		String name = req.getParameter("name");
+		String surname = req.getParameter("surname");
+		String email = req.getParameter("email");
+		String description = req.getParameter("description");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		Boolean isMentor = false;
 
 		Client c = Client.create();
 
@@ -39,14 +42,14 @@ public class SignUp extends HttpServlet {
 			res.sendRedirect("tryAnother.jsp");
 
 		} else {
-
-			webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/add");
-			String input = "{\"username\":" + username + ",\"password\":" + password + ",\"isMentor\":" + isMentor
-					+ "}";
+			webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/addDTO");
+			String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
+					+ ",\"email\":" + email + ",\"username\":" + username + ",\"password\":" + password + "}";
 
 			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
 
 			res.sendRedirect("index.jsp");
+
 		}
 	}
 
