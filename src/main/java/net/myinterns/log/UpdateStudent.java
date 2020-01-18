@@ -26,21 +26,23 @@ public class UpdateStudent extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String email = request.getParameter("email");
-		String description = request.getParameter("descriptionUpdate");
-		String surname = request.getParameter("surnameUpdate");
 		String name = request.getParameter("nameUpdate");
+		String surname = request.getParameter("surnameUpdate");
+		String description = request.getParameter("descriptionUpdate");
+		String emailUpdate = request.getParameter("emailUpdate");
 		String password = request.getParameter("passwordUpdate");
 		String username = request.getParameter("username");
 
 		Client c = Client.create();
 
 		WebResource webResource = c
-				.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/updateByEmail/" + email);
+				.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/updateByEmail/" + emailUpdate);
 
 		String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
-				+ ",\"email\":" + email + ",\"password\":" + password + ",\"username\":" + username + "}";
+				+ ",\"email\":" + emailUpdate + ",\"password\":" + password + ",\"username\":" + username + "}";
 		
 		webResource.type("application/json").post(ClientResponse.class, input);
+		
+		response.sendRedirect("student.jsp");
 	}
 }

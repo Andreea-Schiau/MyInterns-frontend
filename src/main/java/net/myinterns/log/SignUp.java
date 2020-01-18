@@ -1,11 +1,14 @@
 package net.myinterns.log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -28,27 +31,57 @@ public class SignUp extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+	
 		String name = req.getParameter("name");
 		String surname = req.getParameter("surname");
 		String email = req.getParameter("email");
 		String description = req.getParameter("description");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-
+		HttpSession session = req.getSession();
+		
 		Client c = Client.create();
 
-		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/addDTO");
-		String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
-				+ ",\"email\":" + email + ",\"username\":" + username + ",\"password\":" + password + "}";
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
+		ClientResponse responseUsers = webResource.type("application/json").get(ClientResponse.class);
+		JSONArray result = responseUsers.getEntity(JSONArray.class);
 
-		ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
-		if (alreadyUsername(c, username) || alreadyEmail(c, email) ) {
+		int u = 0;
+		JSONObject objS = new JSONObject();
+		List<UserDTO> users = new ArrayList<UserDTO>();
+
+		while (u < result.length()) {
+			try {
+				objS = result.getJSONObject(u);
+				UserDTO userDTO = new UserDTO();
+				userDTO.setUsername(objS.getString("username"));
+				userDTO.setIsMentor(objS.getBoolean("isMentor"));
+				users.add(userDTO);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			u++;
+		}
+		
+		session.setAttribute("users", users);
+		
+		if (alreadyUsername(c, username) || alreadyEmail(c, email)) {
 
 			res.sendRedirect("tryAnother.jsp");
 
 		} else {
-			res.sendRedirect("index.jsp");
+
+			webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/addDTO");
+			String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
+					+ ",\"email\":" + email + ",\"username\":" + username + ",\"password\":" + password + "}";
+
+			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, input);
+
+			res.sendRedirect("login.jsp");
 		}
+		
+		
+
 	}
 
 	protected boolean alreadyUsername(Client c, String username) {
@@ -77,7 +110,7 @@ public class SignUp extends HttpServlet {
 
 		return false;
 	}
-	
+
 	protected boolean alreadyEmail(Client c, String email) {
 
 		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/students");
