@@ -49,8 +49,8 @@
 	<servlet>
 		<description>
 		</description>
-		<display-name>UpdateStudent</display-name>
-		<servlet-name>UpdateStudent</servlet-name>
+		<display-name>updateStudent</display-name>
+		<servlet-name>updateStudent</servlet-name>
 		<servlet-class>net.myinterns.log.UpdateStudent</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -60,6 +60,10 @@
 	<servlet-mapping>
 		<servlet-name>signUp</servlet-name>
 		<url-pattern>/signUp</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>signUp</servlet-name>
+		<url-pattern>/tryAnother</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>logout</servlet-name>
@@ -74,7 +78,7 @@
 		<url-pattern>/update</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>UpdateStudent</servlet-name>
+		<servlet-name>updateStudent</servlet-name>
 		<url-pattern>/updateStudent</url-pattern>
 	</servlet-mapping>
 
