@@ -31,21 +31,20 @@ public class Mentor extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String deleteUser = request.getParameter("deleteUser");
-		long id = Long.parseLong(deleteUser);
+		
+		String username = request.getParameter("deleteUser");
 
 		try {
 			Client client = Client.create();
 			WebResource webResource = client
-					.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/delete/" + id);
+					.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/delete/user/" + username);
 			ClientResponse res = webResource.get(ClientResponse.class);
 
 			if (res.getStatus() != 204) {
 				System.out.println(res.getStatus());
-				System.out.println("The student is still there!");
+				System.out.println("The user is still there!");
 			} else {
-				System.out.println("The student was deleted!");
+				System.out.println("The user was deleted!");
 			}
 
 		} catch (Exception e) {
@@ -81,7 +80,7 @@ public class Mentor extends HttpServlet {
 //			}
 //			u++;
 //		}
-		
+
 //		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/students");
 //		ClientResponse responseStudents = webResource.type("application/json").get(ClientResponse.class);
 //		JSONArray resultStudents = responseStudents.getEntity(JSONArray.class);

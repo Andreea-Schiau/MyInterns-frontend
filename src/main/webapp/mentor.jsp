@@ -80,7 +80,7 @@
 		<div class="row">
 			<%
 				int var1 = 0;
-				for (StudentDTO student : students) {
+				for (UserDTO user : users) {
 			%>
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="card border-0 shadow">
@@ -88,11 +88,11 @@
 						src="https://mra.ro/uploads/modelpics/580b7495e2276-31-Alexandra.jpg"
 						class="card-img-top" alt="...">
 					<div class="card-body text-center">
-						<h5 class="card-title mb-0"><%=student.getName()%></h5>
-						<div class="card-text text-black-50"><%=student.getSurname()%></div>
+						<h5 class="card-title mb-0"><%=user.getUsername()%></h5>
+						<div class="card-text text-black-50">Student</div>
 						<form method="get" action="DeleteUser">
 							<input type=submit value=delete class="fa-trash"> <input
-								type="hidden" name="deleteUser" value=<%=student.getId()%>>
+								type="hidden" name="deleteUser" value=<%=user.getUsername()%>>
 						</form>
 					</div>
 				</div>

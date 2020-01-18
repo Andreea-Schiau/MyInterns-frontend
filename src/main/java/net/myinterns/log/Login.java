@@ -107,7 +107,7 @@ public class Login extends HttpServlet {
 			s++;
 		}
 
-		session.setAttribute("students", students);
+		session.setAttribute("users", users);
 	}
 
 	protected boolean isMentor(Client c, String username) {
