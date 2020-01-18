@@ -182,6 +182,11 @@ iframe {
   pointer-events: none;
 }
 
+.background-test{
+  background: linear-gradient(to right, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+
+}
+
 .wrap-login100 {
   width: 390px;
   background: #fff;

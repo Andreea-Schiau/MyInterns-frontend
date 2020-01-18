@@ -18,11 +18,9 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import net.andree.MyInterns.common.dto.StudentDTO;
 import net.andree.MyInterns.common.dto.UserDTO;
 
-/**
- * Servlet implementation class Login
- */
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +40,7 @@ public class Login extends HttpServlet {
 		ClientResponse res = webResource.type("application/json").post(ClientResponse.class, input);
 		JSONObject output = null;
 		if (res.getStatus() == 200) {
-			 output = res.getEntity(JSONObject.class);
+			output = res.getEntity(JSONObject.class);
 		}
 
 		res.getStatus();
@@ -50,29 +48,33 @@ public class Login extends HttpServlet {
 		session.setAttribute("username", username);
 		session.setAttribute("password", password);
 
-			if (output == null || output.isNull("username")) {
-				response.sendRedirect("wrongUser.jsp");
+//		String studentEmail = getStudentId(c, getUserId(c, username));
+
+//		session.setAttribute("email", studentEmail);
+
+		if (output == null || output.isNull("username")) {
+			response.sendRedirect("wrongUser.jsp");
+		} else {
+			if (isMentor(c, username)) {
+
+				response.sendRedirect("mentor.jsp");
+
 			} else {
-				if (isMentor(c, username)) {
-
-					response.sendRedirect("mentor.jsp");
-
-				} else {
-					response.sendRedirect("student.jsp");
-				}
+				response.sendRedirect("student.jsp");
 			}
+		}
 
-		WebResource webResourceUsersTypeS = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
-		ClientResponse responseUsersTypeS = webResourceUsersTypeS.type("application/json").get(ClientResponse.class);
-		JSONArray resultUserTypeS = responseUsersTypeS.getEntity(JSONArray.class);
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
+		ClientResponse responseUsers = webResource.type("application/json").get(ClientResponse.class);
+		JSONArray result = responseUsers.getEntity(JSONArray.class);
 
-		int s = 0;
+		int u = 0;
 		JSONObject objS = new JSONObject();
 		List<UserDTO> users = new ArrayList<UserDTO>();
 
-		while (s < resultUserTypeS.length()) {
+		while (u < result.length()) {
 			try {
-				objS = resultUserTypeS.getJSONObject(s);
+				objS = result.getJSONObject(u);
 				UserDTO userDTO = new UserDTO();
 				userDTO.setUsername(objS.getString("username"));
 				userDTO.setIsMentor(objS.getBoolean("isMentor"));
@@ -80,10 +82,32 @@ public class Login extends HttpServlet {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			u++;
+		}
+
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/students");
+		responseUsers = webResource.type("application/json").get(ClientResponse.class);
+		result = responseUsers.getEntity(JSONArray.class);
+
+		int s = 0;
+		objS = new JSONObject();
+		List<StudentDTO> students = new ArrayList<StudentDTO>();
+
+		while (s < result.length()) {
+			try {
+				objS = result.getJSONObject(s);
+				StudentDTO studentDTO = new StudentDTO();
+				studentDTO.setName(objS.getString("name"));
+				studentDTO.setSurname(objS.getString("surname"));
+				studentDTO.setId(objS.getLong("id"));
+				students.add(studentDTO);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			s++;
 		}
 
-		session.setAttribute("users", users);
+		session.setAttribute("students", students);
 	}
 
 	protected boolean isMentor(Client c, String username) {
@@ -109,6 +133,7 @@ public class Login extends HttpServlet {
 		WebResource webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
 		ClientResponse responsUsers = webResource.type("application/json").get(ClientResponse.class);
 		JSONArray resultUsers = responsUsers.getEntity(JSONArray.class);
+
 		JSONObject objS = new JSONObject();
 
 		String usernameDB = "";
@@ -129,5 +154,61 @@ public class Login extends HttpServlet {
 		}
 
 		return false;
+	}
+
+	protected long getUserId(Client c, String username) {
+
+		WebResource webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/users");
+		ClientResponse responsUsers = webResource.type("application/json").get(ClientResponse.class);
+		JSONArray resultUsers = responsUsers.getEntity(JSONArray.class);
+
+		JSONObject objS = new JSONObject();
+
+		String usernameDB = "";
+
+		for (int i = 0; i < resultUsers.length(); i++) {
+			try {
+				objS = resultUsers.getJSONObject(i);
+				usernameDB = objS.getString("username");
+
+				if (usernameDB.contentEquals(username)) {
+
+					return objS.getLong("id");
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return 0;
+	}
+
+	protected String getStudentId(Client c, long idUser) {
+
+		WebResource webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/students");
+		ClientResponse responsStudent = webResource.type("application/json").get(ClientResponse.class);
+		JSONArray resultStudents = responsStudent.getEntity(JSONArray.class);
+
+		JSONObject objS = new JSONObject();
+
+		long idStudentDB;
+
+		for (int i = 0; i < resultStudents.length(); i++) {
+			try {
+				objS = resultStudents.getJSONObject(i);
+				idStudentDB = objS.getLong("user_id");
+
+				if (idStudentDB == idUser) {
+
+					return objS.getString("email");
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return null;
 	}
 }
