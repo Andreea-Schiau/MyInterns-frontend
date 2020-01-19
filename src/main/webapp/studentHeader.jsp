@@ -1,10 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ page import="org.codehaus.jettison.json.JSONArray"%>
-<%@ page import="org.codehaus.jettison.json.JSONObject"%>
-<%@ page import="java.util.List"%>
-<%@ page import="net.andree.MyInterns.common.dto.UserDTO"%>
-<%@ page import="net.andree.MyInterns.common.dto.StudentDTO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,16 +48,18 @@
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="resources/css/util.css">
 <link rel="stylesheet" type="text/css" href="resources/css/main.css">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<%
-		String username = (String) session.getAttribute("username");
-		String password = (String) session.getAttribute("password");
-		List<UserDTO> users = (List<UserDTO>) session.getAttribute("users");
-		List<StudentDTO> students = (List<StudentDTO>) session.getAttribute("students");
-	%>
 	<!-- Header -->
-	<header class=" py-6 mb-4 topContainer">
+	<header class=" py-6 mb-4">
 		<div class="container text-right background-test">
 			<div class="row">
 				<div class="text-left col-md-6">
@@ -83,39 +78,3 @@
 		</div>
 
 	</header>
-
-	<!-- Page Content -->
-	<div class="container">
-		<div class="row">
-			<%
-				int var1 = 0;
-				for (UserDTO user : users) {
-					if (!user.getUsername().equals(username)) {
-			%>
-			<div class="col-xl-3 col-md-6 mb-4">
-				<div class="card border-0 shadow">
-					<img
-						src="https://mra.ro/uploads/modelpics/580b7495e2276-31-Alexandra.jpg"
-						class="card-img-top" alt="...">
-					<div class="card-body text-center">
-						<h5 class="card-title mb-0"><%=user.getUsername()%></h5>
-						<div class="card-text text-black-50">
-							<%
-								String role = "Student";
-										if (user.getIsMentor()) {
-											role = "Mentor";
-										}
-							%>
-							<%=role%>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<%
-				 }
-			   }
-			%>
-		</div>
-	</div>
-</body>

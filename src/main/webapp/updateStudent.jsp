@@ -39,7 +39,7 @@
 		String username = (String) session.getAttribute("username");
 		String passwordUpdate = (String) session.getAttribute("password");
 	%>
-	<div class="container-login100" style="background-image: url('resources/images/login_bg.jpg');">
+	<div class="container-login100">
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
 			<form class="login100-form validate-form" method="post" action="updateStudent">
 				<span class="login100-form-title p-b-37">
@@ -80,12 +80,6 @@
 						Edit
 						
 					</button>
-				</div>
-
-				<div class="text-center">
-					<a href="signUp.jsp" class="txt2 hov1">
-						Edit
-					</a>
 				</div>
 			</form>
 		</div>

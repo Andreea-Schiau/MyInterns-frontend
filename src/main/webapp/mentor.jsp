@@ -25,27 +25,36 @@
 	crossorigin="anonymous"></script>
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	
-	<link rel="icon" type="image/png" href="/resources/images/icons/favicon.ico"/>
+
+<link rel="icon" type="image/png"
+	href="/resources/images/icons/favicon.ico" />
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/fonts/iconic/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="resources/vendor/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/vendor/animate/animate.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/vendor/animsition/css/animsition.min.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="resources/vendor/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="resources/css/util.css">
-	<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="resources/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="resources/css/util.css">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 </head>
 <body>
 	<%
@@ -76,11 +85,37 @@
 	</header>
 
 	<!-- Page Content -->
+<!-- 	<div class="container"> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-xl-3 col-md-6 mb-4"> -->
+<!-- 				<div class="card border-0 shadow"> -->
+<!-- 					<img -->
+<!-- 						src="https://mra.ro/uploads/modelpics/580b7495e2276-31-Alexandra.jpg" -->
+<!-- 						class="card-img-top" alt="..."> -->
+<!-- 					<div class="card-body text-center"> -->
+<%-- 						<h5 class="card-title mb-0"><%=user.getUsername()%></h5> --%>
+<!-- 						<div class="card-text text-black-50">Student</div> -->
+<!-- 						<form method="get" action="DeleteUser"> -->
+<!-- 							<input type=submit value=delete class="fa-trash"> <input -->
+<%-- 								type="hidden" name="deleteUser" value=<%=user.getUsername()%>> --%>
+<!-- 							<input type=submit value=beMentor class="far fa-handshake"> -->
+<!-- 							<input type="hidden" name="deleteUser" -->
+<%-- 								value=<%=user.getUsername()%>> --%>
+<!-- 						</form> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<%-- 			<% --%>
+<%-- 			%> --%>
+<!-- 		</div> -->
+<!-- 	</div> -->
+
 	<div class="container">
 		<div class="row">
 			<%
 				int var1 = 0;
 				for (UserDTO user : users) {
+					if (!user.getUsername().equals(username)) {
 			%>
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="card border-0 shadow">
@@ -89,16 +124,26 @@
 						class="card-img-top" alt="...">
 					<div class="card-body text-center">
 						<h5 class="card-title mb-0"><%=user.getUsername()%></h5>
-						<div class="card-text text-black-50">Student</div>
+						<div class="card-text text-black-50">
+							<%
+								String role = "Student";
+										if (user.getIsMentor()) {
+											role = "Mentor";
+										}
+							%>
+							<%=role%>
+						</div>
 						<form method="get" action="DeleteUser">
 							<input type=submit value=delete class="fa-trash"> <input
 								type="hidden" name="deleteUser" value=<%=user.getUsername()%>>
+							<input type=submit value=beMentor class="far fa-handshake">
 						</form>
 					</div>
 				</div>
 			</div>
 			<%
-				}
+				 }
+			   }
 			%>
 		</div>
 	</div>
