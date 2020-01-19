@@ -60,7 +60,7 @@ public class Login extends HttpServlet {
 				response.sendRedirect("mentor.jsp");
 
 			} else {
-				response.sendRedirect("student.jsp");
+				response.sendRedirect("studentInfo.jsp");
 			}
 		}
 
@@ -107,6 +107,35 @@ public class Login extends HttpServlet {
 			s++;
 		}
 
+		long id=0;
+		try {
+			id = getUserByUsername(c, username);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("idStudent: " + id);
+		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/getBy/" + id);
+		responseUsers = webResource.type("application/json").get(ClientResponse.class);
+		JSONObject result1 = responseUsers.getEntity(JSONObject.class);
+
+		String name = null, description = null, surname = null, email = null;
+
+		try {
+			name = result1.getString("name");
+			surname = result1.getString("surname");
+			description = result1.getString("description");
+			email = result1.getString("email");
+			System.out.println(" TestJSON: " + name + " " + surname);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		session.setAttribute("email", email);
+		session.setAttribute("surname", surname);
+		session.setAttribute("description", description);
+		session.setAttribute("name", name);
 		session.setAttribute("users", users);
 	}
 
@@ -115,10 +144,10 @@ public class Login extends HttpServlet {
 		WebResource webUserType = c
 				.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/getByUsername/" + username);
 		ClientResponse responseUserType = webUserType.type("application/json").get(ClientResponse.class);
-		JSONObject outputUserType = responseUserType.getEntity(JSONObject.class);
+		JSONObject outputIsMentor = responseUserType.getEntity(JSONObject.class);
 		boolean isRealyMentor = false;
 		try {
-			isRealyMentor = outputUserType.getBoolean("isMentor");
+			isRealyMentor = outputIsMentor.getBoolean("isMentor");
 			if (isRealyMentor)
 				return true;
 		} catch (Exception e) {
@@ -210,5 +239,18 @@ public class Login extends HttpServlet {
 		}
 
 		return null;
+	}
+
+	protected long getUserByUsername(Client c, String username) throws JSONException {
+		
+		WebResource webResource = c
+				.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/user/getByUsername/" + username);
+		ClientResponse responseId = webResource.type("application/json").get(ClientResponse.class);
+		JSONObject output = responseId.getEntity(JSONObject.class);
+		long id = 0;
+
+		id = output.getLong("id");
+		
+		return id;
 	}
 }
