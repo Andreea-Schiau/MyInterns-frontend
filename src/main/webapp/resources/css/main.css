@@ -466,6 +466,7 @@ iframe {
 	transition: .5s ease;
 	backface-visibility: hidden;
 }
+
 .middle {
 	transition: .5s ease;
 	opacity: 0;
@@ -486,18 +487,28 @@ iframe {
 }
 
 .info {
-    display: inline-block;
-    width: 85px;
-}
-.badge{
-    float: none!important;
-    background-color: #d032d2!important
+	display: inline-block;
+	width: 85px;
 }
 
-.userPhoto{
+.badge {
+	float: none !important;
+	background-color: #d032d2 !important
+}
+
+.userPhoto {
 	width: 100%;
 }
 
-.topContainer{
+.topContainer {
 	margin-bottom: 20px;
 }
+
+.editButton {
+	margin-left: 175px;
+}
+
+.editButton a{
+	color: #fff;
+}
+	

@@ -73,7 +73,7 @@
 				<div class="text-right col-md-6">
 					<h1 class="font-weight-light text-white">
 						Welcome <a class="font-weight-light text-white"
-							href="updateStudent.jsp" style="text-decoration: none;"><%=username%></a>
+							href="studentInfo.jsp" style="text-decoration: none;"><%=username%></a>
 					</h1>
 				</div>
 			</div>
@@ -98,7 +98,10 @@
 						src="https://mra.ro/uploads/modelpics/580b7495e2276-31-Alexandra.jpg"
 						class="card-img-top" alt="...">
 					<div class="card-body text-center">
-						<h5 class="card-title mb-0"><%=user.getUsername()%></h5>
+						<form method="get" action="viewMore">
+							<input type=submit value=<%=user.getUsername()%>> <input
+								type="hidden" name="viewMore" value=<%=user.getUsername()%>>
+						</form>
 						<div class="card-text text-black-50">
 							<%
 								String role = "Student";

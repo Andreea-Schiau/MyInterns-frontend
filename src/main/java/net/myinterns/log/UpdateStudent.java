@@ -1,10 +1,14 @@
 package net.myinterns.log;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -29,17 +33,17 @@ public class UpdateStudent extends HttpServlet {
 		String name = request.getParameter("nameUpdate");
 		String surname = request.getParameter("surnameUpdate");
 		String description = request.getParameter("descriptionUpdate");
-		String emailUpdate = request.getParameter("emailUpdate");
+		String email = request.getParameter("email");
 		String password = request.getParameter("passwordUpdate");
 		String username = request.getParameter("username");
 
 		Client c = Client.create();
 
 		WebResource webResource = c
-				.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/updateByEmail/" + emailUpdate);
+				.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/updateByEmail/" + email);
 
 		String input = "{\"name\":" + name + ",\"surname\":" + surname + ",\"description\":" + description
-				+ ",\"email\":" + emailUpdate + ",\"password\":" + password + ",\"username\":" + username + "}";
+				+ ",\"email\":" + email + ",\"password\":" + password + ",\"username\":" + username + "}";
 		
 		webResource.type("application/json").post(ClientResponse.class, input);
 		

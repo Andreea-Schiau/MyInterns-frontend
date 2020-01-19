@@ -136,7 +136,6 @@
 						<form method="get" action="DeleteUser">
 							<input type=submit value=delete class="fa-trash"> <input
 								type="hidden" name="deleteUser" value=<%=user.getUsername()%>>
-							<input type=submit value=beMentor class="far fa-handshake">
 						</form>
 					</div>
 				</div>

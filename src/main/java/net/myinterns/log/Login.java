@@ -47,12 +47,8 @@ public class Login extends HttpServlet {
 
 		session.setAttribute("username", username);
 		session.setAttribute("password", password);
-
-//		String studentEmail = getStudentId(c, getUserId(c, username));
-
-//		session.setAttribute("email", studentEmail);
-
-		if (output == null || output.isNull("username")) {
+		boolean isOutput = (output == null || output.isNull("username"));
+		if (isOutput) {
 			response.sendRedirect("wrongUser.jsp");
 		} else {
 			if (isMentor(c, username)) {
@@ -107,13 +103,17 @@ public class Login extends HttpServlet {
 			s++;
 		}
 
-		long id=0;
-		try {
-			id = getUserByUsername(c, username);
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		if(!isOutput) {
+			long id=0;
+			try {
+				id = getUserByUsername(c, username);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+
+		
 		System.out.println("idStudent: " + id);
 		webResource = c.resource("http://localhost:8090/MyInterns8-0.0.1-SNAPSHOT/student/getBy/" + id);
 		responseUsers = webResource.type("application/json").get(ClientResponse.class);
@@ -137,7 +137,9 @@ public class Login extends HttpServlet {
 		session.setAttribute("description", description);
 		session.setAttribute("name", name);
 		session.setAttribute("users", users);
-	}
+		}
+		}
+	
 
 	protected boolean isMentor(Client c, String username) {
 

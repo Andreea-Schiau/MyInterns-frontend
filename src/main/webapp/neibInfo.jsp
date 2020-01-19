@@ -18,10 +18,11 @@
 <body>
 	<%
 		String username = (String) session.getAttribute("username");
-		String name = (String) session.getAttribute("name");
-		String surname = (String) session.getAttribute("surname");
-		String description = (String) session.getAttribute("description");
-		String email = (String) session.getAttribute("email");
+		String usernameNeib = (String) session.getAttribute("usernameNeib");
+		String nameNeib = (String) session.getAttribute("name");
+		String surnameNeib = (String) session.getAttribute("surname");
+		String descriptionNeib = (String) session.getAttribute("description");
+		String emailNeib = (String) session.getAttribute("email");
 	%>
 	<div class="container">
 		<header class=" py-6 mb-4 topContainer">
@@ -33,7 +34,7 @@
 					<div class="text-right col-md-6">
 						<h1 class="font-weight-light text-white">
 							Welcome <a class="font-weight-light text-white"
-								href="updateStudent.jsp" style="text-decoration: none;"><%=username%></a>
+								href="studentInfo.jsp" style="text-decoration: none;"><%=username%></a>
 						</h1>
 					</div>
 				</div>
@@ -50,27 +51,24 @@
 			</div>
 			<div class="col-md-7">
 				<ul class="list-group">
+					<li class="list-group-item"><span class="info">Username:</span> <span
+						class="badge"><%=usernameNeib%></span></li>
 					<li class="list-group-item"><span class="info">Name:</span> <span
-						class="badge"><%=name%></span></li>
+						class="badge"><%=nameNeib%></span></li>
 					<li class="list-group-item"><span class="info">Surname:</span>
-						<span class="badge"><%=surname%></span></li>
+						<span class="badge"><%=surnameNeib%></span></li>
 					<li class="list-group-item"><span class="info">Email:</span> <span
-						class="badge"><%=email%></span></li>
+						class="badge"><%=emailNeib%></span></li>
 					<li class="list-group-item"><span class="info">Description:</span>
-						<span class="badge"><%=description%></span></li>
+						<span class="badge"><%=descriptionNeib%></span></li>
 				</ul>
 			</div>
-			<button type="button" class="btn btn-primary btn-lg editButton">
-				<a class="font-weight-light text-white" href="updateStudent.jsp">
-					Edit profile</a>
-			</button>
 			<button type="button" class="btn btn-secondary btn-lg">
 				<a class="font-weight-light text-white" href="student.jsp">See
 					neighborhood <i class="fa fa-rocket">
 				</a>
 			</button>
 		</div>
-
 	</div>
 </body>
 </html>
